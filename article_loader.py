@@ -28,7 +28,7 @@ class ArticleLoader:
 
             article = self.load_article(filepath)
             if article is not None:
-                doc2idx.append(basename)
+                doc2idx.append(basename.rstrip(".txt"))
                 articles.append(article)
 
         return (doc2idx, articles)
