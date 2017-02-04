@@ -5,7 +5,7 @@ import MeCab
 import codecs
 import re
 
-STOPWORDS = ["。", ".", ".", "、", ",", "，"]
+STOPWORDS = ["。", ".", ".", "、", ",", "，", "「", "」"]
 SKIP_WORD_CLASSES = ["BOS/EOS", "助動詞", "助詞", "代名詞"]
 
 class MA:
