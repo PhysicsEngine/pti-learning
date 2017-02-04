@@ -16,7 +16,8 @@ class MA:
         
     def parse(self, sentence):
         sentence = sentence.strip()
-        sentence = re.sub("\u3000|\xa0", " ", sentence)
+        sentence = sentence.replace("\u3000", " ")
+        sentence = sentence.replace("\xa0", " ")
         node = self.mecab.parseToNode(sentence)
         res = []
         while node:
