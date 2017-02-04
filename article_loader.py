@@ -4,6 +4,7 @@
 from ma import MA
 import os
 import codecs
+import logging
 
 class ArticleLoader:
     def __init__(self):
@@ -11,10 +12,13 @@ class ArticleLoader:
 
     def load_article(self, filename):
         article = []
-        with codecs.open(filename, "r", "utf-8") as f:
-            for line in f:
-                line = line.strip()
-                article.append(self.ma.parse(line))
+        try:
+            with codecs.open(filename, "r", "utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    article.append(self.ma.parse(line))
+        except Exception as e:
+            logging.error(e.message)
 
         return " ".join(article)
 
