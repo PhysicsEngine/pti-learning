@@ -3,6 +3,7 @@
 import sys
 import MeCab
 import codecs
+import re
 
 STOPWORDS = ["。", ".", ".", "、", ",", "，"]
 SKIP_WORD_CLASSES = ["BOS/EOS", "助動詞", "助詞", "代名詞"]
@@ -15,6 +16,7 @@ class MA:
         
     def parse(self, sentence):
         sentence = sentence.strip()
+        sentence = re.sub("\u3000", " ", sentence)
         node = self.mecab.parseToNode(sentence)
         res = []
         while node:
