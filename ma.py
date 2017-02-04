@@ -21,10 +21,10 @@ class MA:
         res = []
         while node:
             cat1 = node.feature.split(",")[0]
-            if node.surface in STOPWORDS:
+            if node.surface in self.stopwords:
                 node = node.next
                 continue
-            if cat1 in SKIP_WORD_CLASSES:
+            if cat1 in self.skip_word_classes:
                 node = node.next
                 continue
             res.append(node.surface)
