@@ -16,7 +16,7 @@ class ArticleLoader:
             with codecs.open(filename, "r", "utf-8") as f:
                 for line in f:
                     line = line.strip()
-                    article.append(self.ma.parse(line))
+                    article.append(self.parse(line))
         except Exception as e:
             logging.error(e.message)
 
@@ -36,6 +36,9 @@ class ArticleLoader:
                 articles.append(article)
 
         return (doc2idx, articles)
+
+    def parse(self, sentence):
+        return self.ma.parse(sentence)
 
 if __name__ == '__main__':
     ldr = ArticleLoader()

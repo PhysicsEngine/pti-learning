@@ -7,8 +7,8 @@ import pickle
 
 class PTILDA:
 
-    n_features = 1000
-    n_topics = 2
+    n_features = 5000
+    n_topics = 300
 
     tfv_file = "tfv.pkl"
     tf_file = "tf.pkl"
@@ -19,7 +19,7 @@ class PTILDA:
 
     def train(self, dataset):
         # Use tf (raw term count) features for LDA.
-        self.tf_vectorizer = CountVectorizer(max_df=0.95, min_df=1,
+        self.tf_vectorizer = CountVectorizer(max_df=0.95, min_df=5,
                                 max_features=self.n_features)
         self.tf = self.tf_vectorizer.fit_transform(dataset)
 
@@ -39,7 +39,7 @@ class PTILDA:
         pickle.dump(self.lda, open(self.model_file, "wb"))
 
     def load(self):
-        self.tf_vectorizer = pickle.load(open(self.tf_vectorizer, "rb"))
+        self.tf_vectorizer = pickle.load(open(self.tfv_file, "rb"))
         self.tf = pickle.load(open(self.tf_file, "rb"))
         self.lda = pickle.load(open(self.model_file, "rb"))
         self.matrix = self.lda.transform(self.tf)
@@ -51,7 +51,7 @@ class PTILDA:
                 print("Topic #{}:".format(topic_idx))
                 print(" ".join([feature_names[i]
                         for i in topic.argsort()[:-n_top_words - 1:-1]]))
-            print()
+                print()
 
     def print_doc_topic(self, n_top, doc_id=None):
         for i, doc in enumerate(self.matrix):
@@ -68,6 +68,14 @@ class PTILDA:
                         break
                 print()
 
+    def print_doc_threshold_by_topic(self, topic, threshold=0.5):
+        count = 0
+        for i, doc in enumerate(self.matrix):
+            if doc[topic] >= threshold:
+                    print ("Doc:{}".format(i))
+                    count += 1
+        print ("Count:{}".format(count))
+        
     def dump_topic(self, idx2doc):
         for i, doc in enumerate(self.matrix):
             result = []
